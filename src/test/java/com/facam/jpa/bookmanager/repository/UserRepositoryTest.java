@@ -1,5 +1,6 @@
 package com.facam.jpa.bookmanager.repository;
 
+import com.facam.jpa.bookmanager.domain.Gender;
 import com.facam.jpa.bookmanager.domain.User;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,8 @@ import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatc
 class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserHistoryRepository userHistoryRepository;
 
     @Test
     void crud() {
@@ -32,35 +35,35 @@ class UserRepositoryTest {
 
     @Test
     void select() {
-//        System.out.println(userRepository.findByName("aaaa"));
-//
-//        System.out.println("findByEmail : " + userRepository.findByEmail("martin@fmail.com"));
-//        System.out.println("getByEmail : " + userRepository.getByEmail("martin@fmail.com"));
-//        System.out.println("readByEmail : " + userRepository.readByEmail("martin@fmail.com"));
-//        System.out.println("queryByEmail : " + userRepository.queryByEmail("martin@fmail.com"));
-//        System.out.println("searchByEmail : " + userRepository.searchByEmail("martin@fmail.com"));
-//        System.out.println("streamByEmail : " + userRepository.streamByEmail("martin@fmail.com"));
-//        System.out.println("findUserByEmail : " + userRepository.findUserByEmail("martin@fmail.com"));
-//
-//        System.out.println("findFirst1ByName : " + userRepository.findFirst1ByName("martin"));
-//        System.out.println("findTop1ByName : " + userRepository.findTop1ByName("martin"));
-//
-//        System.out.println("findByEmailAndName : " + userRepository.findByEmailAndName("martin@fmail.com", "martin"));
-//        System.out.println("findByEmailOrName : " + userRepository.findByEmailOrName("martin@fmail.com", "aaa"));
-//
-//        System.out.println("findByCreatedAtAfter : " + userRepository.findByCreatedAtAfter(LocalDateTime.now().minusDays(1L)));
-//        System.out.println("findByIdAfter : " + userRepository.findByIdAfter(4L));
-//        System.out.println("findByCreatedAtGreaterThan : " + userRepository.findByCreatedAtGreaterThan(LocalDateTime.now().minusDays(1L)));
-//        System.out.println("findByCreatedAtGreaterThanEqual : " + userRepository.findByCreatedAtGreaterThanEqual(LocalDateTime.now().minusDays(1L)));
-//
-//        System.out.println("findByCreatedAtBetween : " + userRepository.findByCreatedAtBetween(LocalDateTime.now().minusDays(1L), LocalDateTime.now().plusDays(1L)));
-//        System.out.println("findByIdBetween : " + userRepository.findByIdBetween(1L, 3L));
-//        System.out.println("findByIdGreaterThanEqualAndIdLessThanEqual : " + userRepository.findByIdGreaterThanEqualAndIdLessThanEqual(1L, 3L));
-//
-//        System.out.println("findByIdIsNotNull : " + userRepository.findByIdIsNotNull());
-//        System.out.println("findByAddressIsNotEmpty : " + userRepository.findByAddressIsNotEmpty());
-//
-//        System.out.println("findByNameIn : " + userRepository.findByNameIn(Lists.newArrayList("martin", "aaaa")));
+        System.out.println(userRepository.findByName("aaaa"));
+
+        System.out.println("findByEmail : " + userRepository.findByEmail("martin@fmail.com"));
+        System.out.println("getByEmail : " + userRepository.getByEmail("martin@fmail.com"));
+        System.out.println("readByEmail : " + userRepository.readByEmail("martin@fmail.com"));
+        System.out.println("queryByEmail : " + userRepository.queryByEmail("martin@fmail.com"));
+        System.out.println("searchByEmail : " + userRepository.searchByEmail("martin@fmail.com"));
+        System.out.println("streamByEmail : " + userRepository.streamByEmail("martin@fmail.com"));
+        System.out.println("findUserByEmail : " + userRepository.findUserByEmail("martin@fmail.com"));
+
+        System.out.println("findFirst1ByName : " + userRepository.findFirst1ByName("martin"));
+        System.out.println("findTop1ByName : " + userRepository.findTop1ByName("martin"));
+
+        System.out.println("findByEmailAndName : " + userRepository.findByEmailAndName("martin@fmail.com", "martin"));
+        System.out.println("findByEmailOrName : " + userRepository.findByEmailOrName("martin@fmail.com", "aaa"));
+
+        System.out.println("findByCreatedAtAfter : " + userRepository.findByCreatedAtAfter(LocalDateTime.now().minusDays(1L)));
+        System.out.println("findByIdAfter : " + userRepository.findByIdAfter(4L));
+        System.out.println("findByCreatedAtGreaterThan : " + userRepository.findByCreatedAtGreaterThan(LocalDateTime.now().minusDays(1L)));
+        System.out.println("findByCreatedAtGreaterThanEqual : " + userRepository.findByCreatedAtGreaterThanEqual(LocalDateTime.now().minusDays(1L)));
+
+        System.out.println("findByCreatedAtBetween : " + userRepository.findByCreatedAtBetween(LocalDateTime.now().minusDays(1L), LocalDateTime.now().plusDays(1L)));
+        System.out.println("findByIdBetween : " + userRepository.findByIdBetween(1L, 3L));
+        System.out.println("findByIdGreaterThanEqualAndIdLessThanEqual : " + userRepository.findByIdGreaterThanEqualAndIdLessThanEqual(1L, 3L));
+
+        System.out.println("findByIdIsNotNull : " + userRepository.findByIdIsNotNull());
+        System.out.println("findByAddressIsNotEmpty : " + userRepository.findByAddressIsNotEmpty());
+
+        System.out.println("findByNameIn : " + userRepository.findByNameIn(Lists.newArrayList("martin", "aaaa")));
 
         System.out.println("findByNameStartingWith : " + userRepository.findByNameStartingWith("mar"));
         System.out.println("findByNameEndingWith : " + userRepository.findByNameEndingWith("tin"));
@@ -77,5 +80,87 @@ class UserRepositoryTest {
         System.out.println("findFirstByNameOrderByIdDescEmailAsc : " + userRepository.findFirstByNameOrderByIdDescEmailAsc("martin"));
         System.out.println("findFirstByNameWithSortParams : " + userRepository.findFirstByName("martin", Sort.by(Sort.Order.desc("id"), Sort.Order.asc("email"))));
         System.out.println("findByNameWithPaging : " + userRepository.findByName("martin", PageRequest.of(0,1,Sort.by(Sort.Order.desc("id")))).getContent());
+    }
+
+    @Test
+    void insertAndUpdateTest() {
+        User user = new User();
+        user.setName("haze");
+        user.setEmail("haze@fmail.com");
+
+        userRepository.save(user);
+
+        User user2 = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        user2.setName("Haze");
+
+        userRepository.save(user2);
+    }
+
+    @Test
+    void enumTest() {
+        User user = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        user.setGender(Gender.MALE);
+
+        userRepository.save(user);
+
+        userRepository.findAll().forEach(System.out::println);
+
+        System.out.println(userRepository.findRawRecord().get("gender"));
+    }
+
+    @Test
+    void listenerTest() {
+        User user = new User();
+        user.setEmail("martin@fast.com");
+        user.setName("martin");
+
+        userRepository.save(user);
+
+        User user2 = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        user2.setName("marrrrrrtin");
+
+        userRepository.save(user2);
+
+        userRepository.deleteById(4L);
+    }
+
+    @Test
+    void prePersistTest() {
+        User user = new User();
+        user.setEmail("haze@wmail.com");
+        user.setName("haze");
+//        user.setCreatedAt(LocalDateTime.now());
+//        user.setUpdatedAt(LocalDateTime.now());
+
+        userRepository.save(user);
+
+        System.out.println(userRepository.findByEmail("haze@wmail.com"));
+    }
+
+    @Test
+    void preUpdateTest() {
+        User user = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+
+        System.out.println("as-is : " + user);
+
+        user.setName("haze22");
+        userRepository.save(user);
+
+        System.out.println("to-be : " + userRepository.findAll().get(0));
+    }
+
+    @Test
+    void userHistoryTest() {
+        User user = new User();
+        user.setEmail("haze@eeeeee.com");
+        user.setName("haze");
+
+        userRepository.save(user);
+
+        user.setName("haze-new");
+
+        userRepository.save(user);
+
+        userHistoryRepository.findAll().forEach(System.out::println);
     }
 }

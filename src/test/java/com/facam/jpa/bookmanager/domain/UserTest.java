@@ -13,7 +13,7 @@ class UserTest {
         user.setCreatedAt(LocalDateTime.now());
         user.setUpdatedAt(LocalDateTime.now());
 
-        User user1 = new User(null,"haze", "haze@gmail.com", LocalDateTime.now(), LocalDateTime.now(), null);
+//        User user1 = new User(null,"haze", "haze@gmail.com", LocalDateTime.now(), LocalDateTime.now());
         User user2 = new User("haze","haze@gmail.com");
 
         User user3 = User.builder()
