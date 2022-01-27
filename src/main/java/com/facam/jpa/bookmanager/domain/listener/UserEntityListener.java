@@ -8,21 +8,23 @@ import com.facam.jpa.bookmanager.surport.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.PostPersist;
+import javax.persistence.PostUpdate;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
 public class UserEntityListener {
-    @PrePersist
-    @PreUpdate
+    @PostPersist
+    @PostUpdate
     public void prePersistAndUpdate(Object o) {
         UserHistoryRepository userHistoryRepository = BeanUtils.getBean(UserHistoryRepository.class);
 
         User user = (User) o;
 
         UserHistory userHistory = new UserHistory();
-        userHistory.setUserId(user.getId());
         userHistory.setName(user.getName());
         userHistory.setEmail(user.getEmail());
+        userHistory.setUser(user);
 
         userHistoryRepository.save(userHistory);
     }

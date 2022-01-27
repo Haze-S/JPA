@@ -2,6 +2,7 @@ package com.facam.jpa.bookmanager.repository;
 
 import com.facam.jpa.bookmanager.domain.Gender;
 import com.facam.jpa.bookmanager.domain.User;
+import com.facam.jpa.bookmanager.domain.UserHistory;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +62,6 @@ class UserRepositoryTest {
         System.out.println("findByIdGreaterThanEqualAndIdLessThanEqual : " + userRepository.findByIdGreaterThanEqualAndIdLessThanEqual(1L, 3L));
 
         System.out.println("findByIdIsNotNull : " + userRepository.findByIdIsNotNull());
-        System.out.println("findByAddressIsNotEmpty : " + userRepository.findByAddressIsNotEmpty());
 
         System.out.println("findByNameIn : " + userRepository.findByNameIn(Lists.newArrayList("martin", "aaaa")));
 
@@ -162,5 +162,31 @@ class UserRepositoryTest {
         userRepository.save(user);
 
         userHistoryRepository.findAll().forEach(System.out::println);
+    }
+
+    @Test
+    void userRelationTest() {
+        User user = new User();
+        user.setName("haze");
+        user.setEmail("haze@amail.com");
+        user.setGender(Gender.MALE);
+        userRepository.save(user);
+
+        user.setName("daniel");
+        userRepository.save(user);
+
+        user.setEmail("daniel@amail.com");
+        userRepository.save(user);
+
+//        userHistoryRepository.findAll().forEach(System.out::println);
+
+//        List<UserHistory> result = userHistoryRepository.findByUserId(
+//                userRepository.findByEmail("daniel@amail.com").getId());
+
+        List<UserHistory> result = userRepository.findByEmail("daniel@amail.com").getUserHistories();
+
+        result.forEach(System.out::println);
+
+        System.out.println("UserHistory.getUser() : " + userHistoryRepository.findAll().get(0).getUser());
     }
 }
