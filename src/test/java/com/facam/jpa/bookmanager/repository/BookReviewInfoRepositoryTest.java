@@ -19,6 +19,7 @@ class BookReviewInfoRepositoryTest {
     void crudTest() {
         BookReviewInfo bookReviewInfo = new BookReviewInfo();
 //        bookReviewInfo.setBookId(1L);
+        bookReviewInfo.setBook(givenBook());
         bookReviewInfo.setAverageReviewScore(4.5F);
         bookReviewInfo.setReviewCount(2);
 
@@ -32,7 +33,7 @@ class BookReviewInfoRepositoryTest {
         givenBookReviewInfo();
 
         Book result = bookReviewInfoRepository
-                        .findById(1L)
+                        .findById(7L)
                         .orElseThrow(RuntimeException::new)
                         .getBook();
 
