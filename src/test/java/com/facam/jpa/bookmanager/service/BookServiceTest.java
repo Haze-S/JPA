@@ -1,5 +1,6 @@
 package com.facam.jpa.bookmanager.service;
 
+import com.facam.jpa.bookmanager.domain.Book;
 import com.facam.jpa.bookmanager.repository.AuthorRepository;
 import com.facam.jpa.bookmanager.repository.BookRepository;
 import org.junit.jupiter.api.Test;
@@ -26,5 +27,17 @@ class BookServiceTest {
         }
         System.out.println("books : " + bookRepository.findAll());          // select * from book
         System.out.println("authors : " + authorRepository.findAll());
+    }
+
+    @Test
+    void isolationTest() {
+        Book book = new Book();
+        book.setName("JPA");
+
+        bookRepository.save(book);
+
+        bookService.get(1L);
+
+        System.out.println(">>>> " + bookRepository.findAll());
     }
 }
