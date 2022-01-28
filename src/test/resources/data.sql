@@ -7,3 +7,11 @@ insert into user (`id`, `name`, `email`, `created_at`, `updated_at`) values (3, 
 insert into user (`id`, `name`, `email`, `created_at`, `updated_at`) values (4, 'cccc', 'cccc@fmail.com', now(), now());
 
 insert into user (`id`, `name`, `email`, `created_at`, `updated_at`) values (5, 'martin', 'martin@dddd.com', now(), now());
+
+insert into publisher(`id`, `name`) values  (1, '패캠');
+
+insert into book(`id`, `name`, `publisher_id`, `deleted`) values (1, 'JPA', 1, false);
+
+insert into book(`id`, `name`, `publisher_id`, `deleted`) values (2, 'Spring', 1, false);
+
+insert into book(`id`, `name`, `publisher_id`, `deleted`) values (3, 'SpringBoot', 1, true);
