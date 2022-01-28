@@ -35,7 +35,7 @@ public class BookRepositoryTest {
 
     @Test
     @Transactional
-    void boorRelationTest() {
+    void bookRelationTest() {
         givenBookAndReview();
 
         User user = userRepository.findByEmail("martin@fmail.com");
@@ -44,6 +44,37 @@ public class BookRepositoryTest {
         System.out.println("Book : " + user.getReviews().get(0).getBook());
         System.out.println("Publisher : " + user.getReviews().get(0).getBook().getPublisher());
     }
+
+    @Transactional
+    @Test
+    void bookCascadeTest() {
+        Book book = new Book();
+        book.setName("JPA");
+
+//        bookRepository.save(book);
+
+        Publisher publisher = new Publisher();
+        publisher.setName("패캠");
+
+//        publisherRepository.save(publisher);
+
+        book.setPublisher(publisher);
+        bookRepository.save(book);
+
+//        publisher.addBook(book);
+//        publisherRepository.save(publisher);
+
+        System.out.println("book : " + bookRepository.findAll());
+        System.out.println("publishers : " + publisherRepository.findAll());
+
+        Book book1 = bookRepository.findById(1L).get();
+        book1.getPublisher().setName("슬캠");
+
+        bookRepository.save(book1);
+
+        System.out.println("publishers : " + publisherRepository.findAll());
+    }
+
 
     private void givenBookAndReview() {
         givenReview(givenUser(), givenBook(givenPublisher()));
