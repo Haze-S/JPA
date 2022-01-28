@@ -10,8 +10,8 @@ insert into user (`id`, `name`, `email`, `created_at`, `updated_at`) values (5, 
 
 insert into publisher(`id`, `name`) values  (1, '패캠');
 
-insert into book(`id`, `name`, `publisher_id`, `deleted`) values (1, 'JPA', 1, false);
+insert into book(`id`, `name`, `publisher_id`, `deleted`, `status`) values (1, 'JPA', 1, false, 100);
 
-insert into book(`id`, `name`, `publisher_id`, `deleted`) values (2, 'Spring', 1, false);
+insert into book(`id`, `name`, `publisher_id`, `deleted`, `status`) values (2, 'Spring', 1, false, 200);
 
-insert into book(`id`, `name`, `publisher_id`, `deleted`) values (3, 'SpringBoot', 1, true);
+insert into book(`id`, `name`, `publisher_id`, `deleted`, `status`) values (3, 'SpringBoot', 1, true, 100);

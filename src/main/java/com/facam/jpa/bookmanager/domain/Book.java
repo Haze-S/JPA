@@ -1,6 +1,8 @@
 package com.facam.jpa.bookmanager.domain;
 
+import com.facam.jpa.bookmanager.domain.converter.BookStatusConverter;
 import com.facam.jpa.bookmanager.domain.listener.Auditable;
+import com.facam.jpa.bookmanager.repository.dto.BookStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -57,6 +59,9 @@ public class Book extends BaseEntity {
     private List<BookAndAuthor> bookAndAuthors = new ArrayList<>();
 
     private boolean deleted;
+
+//    @Convert(converter = BookStatusConverter.class)
+    private BookStatus status; // 판매상태
 
     public void addBookAndAuthor(BookAndAuthor... bookAndAuthors) {
         Collections.addAll(this.bookAndAuthors, bookAndAuthors);

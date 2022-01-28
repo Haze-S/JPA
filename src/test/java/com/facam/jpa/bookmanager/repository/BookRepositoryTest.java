@@ -4,11 +4,15 @@ import com.facam.jpa.bookmanager.domain.Book;
 import com.facam.jpa.bookmanager.domain.Publisher;
 import com.facam.jpa.bookmanager.domain.Review;
 import com.facam.jpa.bookmanager.domain.User;
+import com.facam.jpa.bookmanager.repository.dto.BookStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @SpringBootTest
 public class BookRepositoryTest {
@@ -105,6 +109,67 @@ public class BookRepositoryTest {
 
         bookRepository.findAllByDeletedFalse().forEach(System.out::println);
         bookRepository.findByCategoryIsNullAndDeletedFalse().forEach(System.out::println);
+    }
+
+    @Test
+    void queryTest() {
+        bookRepository.findAll().forEach(System.out::println);
+
+        System.out.println("findByCategoryIsNullAndNameEqualsAndCreatedAtGreaterThanEqualAndUpdatedAtGreaterThanEqual : " +
+                bookRepository.findByCategoryIsNullAndNameEqualsAndCreatedAtGreaterThanEqualAndUpdatedAtGreaterThanEqual(
+                        "JPA 초격차 패키지",
+                        LocalDateTime.now().minusDays(1L),
+                        LocalDateTime.now().minusDays(1L)
+                ));
+
+        System.out.println("findByNameRecently : " +
+                bookRepository.findByNameRecently(
+                        "JPA 초격차 패키지",
+                        LocalDateTime.now().minusDays(1L),
+                        LocalDateTime.now().minusDays(1L)));
+
+        System.out.println(bookRepository.findBookNameAndCategory());
+
+        bookRepository.findBookNameAndCategory().forEach(b -> { System.out.println(b.getName() + " : " + b.getCategory());});
+
+        bookRepository.findBookNameAndCategory(PageRequest.of(1, 1)).forEach(
+                bookNameAndCategory -> System.out.println(bookNameAndCategory.getName() + " : " + bookNameAndCategory.getCategory()));
+
+        bookRepository.findBookNameAndCategory(PageRequest.of(0, 1)).forEach(
+                bookNameAndCategory -> System.out.println(bookNameAndCategory.getName() + " : " + bookNameAndCategory.getCategory()));
+    }
+
+    @Test
+    void nativeQueryTest() {
+//        bookRepository.findAll().forEach(System.out::println);
+//        bookRepository.findAllCustom().forEach(System.out::println);
+
+        List<Book> books = bookRepository.findAll();
+
+        for (Book book : books) {
+            book.setCategory("IT전문서");
+        }
+
+        bookRepository.saveAll(books);
+        System.out.println(bookRepository.findAll());
+
+        System.out.println("affected rows : " + bookRepository.updateCategories());
+        bookRepository.findAllCustom().forEach(System.out::println);
+
+        System.out.println(bookRepository.showTables());
+    }
+
+    @Test
+    void converterTest() {
+        bookRepository.findAll().forEach(System.out::println);
+
+        Book book = new Book();
+        book.setName("또다른 IT 전문 서적");
+        book.setStatus(new BookStatus(200));
+
+        bookRepository.save(book);
+
+        System.out.println(bookRepository.findRawRecord().values());
     }
 
     private void givenBookAndReview() {
